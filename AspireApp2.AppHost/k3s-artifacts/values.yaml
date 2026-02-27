@@ -1,0 +1,27 @@
+parameters:
+  apiservice:
+    port_http: 8080
+    port_https: 8081
+    apiservice_image: "sfugarino/aspireapp2apiservice:latest"
+  webfrontend:
+    port_http: 8080
+    port_https: 8081
+    webfrontend_image: "sfugarino/aspireapp2web:latest"
+secrets:
+  cache:
+    REDIS_PASSWORD: ""
+config:
+  apiservice:
+    OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+    OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+    OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+    ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    CACHE_HOST: "192.168.1.106"
+    CACHE_PORT: "6379"
+  webfrontend:
+    OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+    OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+    OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+    ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    CACHE_HOST: "192.168.1.106"
+    CACHE_PORT: "6379"

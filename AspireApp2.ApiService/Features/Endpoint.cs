@@ -26,7 +26,7 @@ namespace AspireApp2.ApiService.Features
 
             WeatherForecast[] forecast = [];
 
-            if (string.IsNullOrEmpty(cachedData))
+            if (!string.IsNullOrEmpty(cachedData))
             {
                 // 2. Deserialize the JSON string to a C# object
                 forecast = JsonSerializer.Deserialize<WeatherForecast[]>(cachedData) ?? [];
