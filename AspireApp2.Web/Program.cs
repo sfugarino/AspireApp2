@@ -29,7 +29,7 @@ builder.Services.AddDataProtection()
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-var apiServiceBaseUrl = builder.Configuration["ApiService:BaseUrl"] ?? "https+http://apiservice";
+var apiServiceBaseUrl = builder.Configuration["ApiService:BaseUrl"] ?? "https://apiservice";
 
 Console.WriteLine("API Service Base URL: " + apiServiceBaseUrl);
 
