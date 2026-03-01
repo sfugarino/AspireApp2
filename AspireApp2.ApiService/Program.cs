@@ -6,7 +6,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 
-builder.AddRedisClient("cache");
+try
+{
+    builder.Configuration.GetConnectionString("cache");
+    builder.AddRedisClient("cache", settings =>
+    {   
+        Console.WriteLine("Redis Connection String: " + settings.ConnectionString);
+        settings.ConnectionString = builder.Configuration.GetConnectionString("cache");
+    });
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Error retrieving Redis connection string: " + ex.Message);
+}
+
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
@@ -22,7 +36,7 @@ app.UseFastEndpoints();
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();

@@ -15,14 +15,29 @@ spec:
         app.kubernetes.io/component: "webfrontend"
         app.kubernetes.io/instance: "{{.Release.Name}}"
     spec:
+      volumes:
+      - name: cert-volume
+        secret:
+          secretName: aspnet-tls
       containers:
         - image: "{{ .Values.parameters.webfrontend.webfrontend_image }}"
           name: "webfrontend"
           envFrom:
             - configMapRef:
                 name: "webfrontend-config"
-            - secretRef:
-                name: "webfrontend-secrets"
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Staging
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+              value: "/certs/asp-net.pfx"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+              valueFrom:
+                secretKeyRef:
+                  name: aspnet-tls-pwd
+                  key: password
+          volumeMounts:
+            - name: cert-volume
+              mountPath: "/certs"
           ports:
             - name: "http"
               protocol: "TCP"
@@ -30,9 +45,9 @@ spec:
             - name: "https"
               protocol: "TCP"
               containerPort: {{ .Values.parameters.webfrontend.port_https }}
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
       imagePullSecrets:
-      - name: regcred
+        - name: "regcred"
   selector:
     matchLabels:
       app.kubernetes.io/name: "aspireapp2-apphost"

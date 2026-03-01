@@ -13,8 +13,6 @@ data:
   OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "{{ .Values.config.webfrontend.OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY }}"
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "{{ .Values.config.webfrontend.ASPNETCORE_FORWARDEDHEADERS_ENABLED }}"
   HTTP_PORTS: "{{ .Values.config.webfrontend.HTTP_PORTS }}"
-  CACHE_HOST: "{{ .Values.config.webfrontend.CACHE_HOST }}"
-  CACHE_PORT: "{{ .Values.config.webfrontend.CACHE_PORT }}"
   APISERVICE_HTTP: "{{ .Values.config.webfrontend.APISERVICE_HTTP }}"
   services__apiservice__http__0: "{{ .Values.config.webfrontend.services__apiservice__http__0 }}"
   APISERVICE_HTTPS: "{{ .Values.config.webfrontend.APISERVICE_HTTPS }}"

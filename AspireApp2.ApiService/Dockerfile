@@ -4,9 +4,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
+EXPOSE 443
 
+ENV ASPNETCORE_HTTPS_PORTS=443
+ENV ASPNETCORE_HTTP_PORTS=80
+ENV ASPNETCORE_URLS="https://0.0.0.0:443;http://0.0.0.0:80"
+ENV ASPNETCORE_ENVIRONMENT=Staging
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
@@ -27,5 +31,6 @@ RUN dotnet publish "./AspireApp2.ApiService.csproj" -c $BUILD_CONFIGURATION -o /
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AspireApp2.ApiService.dll"]
