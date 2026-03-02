@@ -15,28 +15,16 @@ spec:
         app.kubernetes.io/component: "apiservice"
         app.kubernetes.io/instance: "{{.Release.Name}}"
     spec:
-
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - turing-two
-                - turing-three
-                - turing-four
+{{ toYaml .Values.affinity | nindent 8 }}
       volumes:
-      - name: cert-volume
-        secret:
-          secretName: aspnet-tls
+{{ toYaml .Values.volumes | nindent 8 }}
       containers:
         - image: "{{ .Values.parameters.apiservice.apiservice_image }}"
           name: "apiservice"
           envFrom:
-            - configMapRef:
-                name: "apiservice-config"
+          - configMapRef:
+              name: "apiservice-config"
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Staging
@@ -48,8 +36,7 @@ spec:
                   name: aspnet-tls-pwd
                   key: password
           volumeMounts:
-            - name: cert-volume
-              mountPath: "/certs"
+{{ toYaml .Values.volumeMounts | nindent 12 }}
           ports:
             - name: "http"
               protocol: "TCP"
