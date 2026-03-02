@@ -45,7 +45,8 @@ namespace AspireApp2.ApiService.Features
                                 .ToArray()];
 
                 string jsonString = System.Text.Json.JsonSerializer.Serialize(forecast);
-                await db.StringSetAsync("weatherforecast", jsonString);
+                TimeSpan expiry = TimeSpan.FromMinutes(5);
+                await db.StringSetAsync("weatherforecast", jsonString, expiry);
             }
 
             await Send.OkAsync(forecast, ct);
