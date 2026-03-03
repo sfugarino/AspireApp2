@@ -7,13 +7,22 @@ parameters:
     port_http: 80
     port_https: 443
     webfrontend_image: "sfugarino/aspireapp2web:arm64v8"
-secrets: {}
+secrets: 
+  mongo:
+    MONGO_INITDB_ROOT_PASSWORD: "admin"
 config:
+  mongo:
+    MONGO_INITDB_ROOT_USERNAME: "admin"
   apiservice:
     OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
     OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
     OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
     ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    MONGO_HOST: "mongo-service"
+    MONGO_PORT: "27017"
+    MONGO_USERNAME: "admin"
+    MONGO_AUTHENTICATIONDATABASE: "admin"
+    MONGO_AUTHENTICATIONMECHANISM: "SCRAM-SHA-256"
   webfrontend:
     OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
     OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
@@ -22,14 +31,14 @@ config:
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
-       nodeSelectorTerms:
-       - matchExpressions:
-         - key: kubernetes.io/hostname
-           operator: In
-           values:
-           - turing-two
-           - turing-three
-           - turing-four
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - turing-two
+          - turing-three
+          - turing-four
 volumeMounts:
 - name: cert-volume
   mountPath: "/certs"

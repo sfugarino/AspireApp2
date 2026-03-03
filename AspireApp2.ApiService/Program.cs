@@ -1,3 +1,5 @@
+using AspireApp2.ApiService.Config;
+using AspireApp2.ApiService.Services;
 using FastEndpoints;
 using Scalar.AspNetCore;
 
@@ -20,6 +22,10 @@ catch (Exception ex)
     Console.WriteLine("Error retrieving Redis connection string: " + ex.Message);
 }
 
+builder.Services.Configure<WeatherDatabaseSettings>(
+    builder.Configuration.GetSection("WeatherForcastDatabase"));
+
+builder.Services.AddSingleton<WeatherService>();
 
 // Add services to the container.
 builder.Services.AddProblemDetails();

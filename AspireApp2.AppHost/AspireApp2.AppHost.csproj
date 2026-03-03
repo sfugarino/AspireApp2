@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.Kubernetes" Version="13.1.2-preview.1.26125.13" />
+    <PackageReference Include="Aspire.Hosting.MongoDB" Version="13.1.2" />
     <PackageReference Include="Scalar.Aspire" Version="0.8.57" />
   </ItemGroup>
 

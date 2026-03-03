@@ -4,8 +4,14 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var k3s = builder.AddKubernetesEnvironment("k3s");
 
+
+var mongodb = builder.AddMongoDB("mongo")
+                   .WithLifetime(ContainerLifetime.Persistent)
+                   .WithComputeEnvironment(k3s);
+
 var apiService = builder.AddProject<Projects.AspireApp2_ApiService>("apiservice")
     .WithHttpHealthCheck("/health")
+    .WithReference(mongodb)
     .WithComputeEnvironment(k3s);
 
 builder.AddProject<Projects.AspireApp2_Web>("webfrontend")

@@ -13,3 +13,8 @@ data:
   OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "{{ .Values.config.apiservice.OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY }}"
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "{{ .Values.config.apiservice.ASPNETCORE_FORWARDEDHEADERS_ENABLED }}"
   HTTP_PORTS: "{{ .Values.config.apiservice.HTTP_PORTS }}"
+  MONGO_HOST: "{{ .Values.config.apiservice.MONGO_HOST }}"
+  MONGO_PORT: "{{ .Values.config.apiservice.MONGO_PORT }}"
+  MONGO_USERNAME: "{{ .Values.config.apiservice.MONGO_USERNAME }}"
+  MONGO_AUTHENTICATIONDATABASE: "{{ .Values.config.apiservice.MONGO_AUTHENTICATIONDATABASE }}"
+  MONGO_AUTHENTICATIONMECHANISM: "{{ .Values.config.apiservice.MONGO_AUTHENTICATIONMECHANISM }}"
